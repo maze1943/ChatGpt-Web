@@ -1,4 +1,4 @@
-import ResultPage from '@/pages/result'
+// import ResultPage from '@/pages/result'
 import React from 'react'
 import type { RouteObject } from 'react-router-dom'
 
@@ -14,13 +14,14 @@ export interface RouteOptions extends Omit<Omit<RouteObject, 'children'>, 'index
 }
 
 const ChatPage = React.lazy(() => import('@/pages/chat'))
-const DrawPage = React.lazy(() => import('@/pages/draw'))
-const ShopPage = React.lazy(() => import('@/pages/shop'))
+const ChatLLM = React.lazy(() => import('@/pages/chatLLM'))
+// const DrawPage = React.lazy(() => import('@/pages/draw'))
+// const ShopPage = React.lazy(() => import('@/pages/shop'))
 
 const routes: RouteOptions[] = [
   {
     id: 'ChatPage',
-    path: '/',
+    path: '/chat',
     element: <ChatPage />,
     children: [],
     configure: {
@@ -28,32 +29,41 @@ const routes: RouteOptions[] = [
     }
   },
   {
-    id: 'DrawPage',
-    path: '/draw',
-    element: <DrawPage />,
+    id: 'ChatLLM',
+    path: '/chatLLM',
+    element: <ChatLLM />,
     children: [],
     configure: {
       verifToken: false
     }
   },
-  {
-    id: 'ShopPage',
-    path: '/shop',
-    element: <ShopPage />,
-    children: [],
-    configure: {
-      verifToken: true
-    }
-  },
-  {
-    id: 'ResultPage',
-    path: '/result',
-    element: <ResultPage />,
-    children: [],
-    configure: {
-      verifToken: false
-    }
-  }
+  // {
+  //   id: 'DrawPage',
+  //   path: '/draw',
+  //   element: <DrawPage />,
+  //   children: [],
+  //   configure: {
+  //     verifToken: false
+  //   }
+  // },
+  // {
+  //   id: 'ShopPage',
+  //   path: '/shop',
+  //   element: <ShopPage />,
+  //   children: [],
+  //   configure: {
+  //     verifToken: true
+  //   }
+  // },
+  // {
+  //   id: 'ResultPage',
+  //   path: '/result',
+  //   element: <ResultPage />,
+  //   children: [],
+  //   configure: {
+  //     verifToken: false
+  //   }
+  // }
 ]
 
 export function searchRouteDetail(path: string, routes: RouteOptions[]): RouteOptions | null {

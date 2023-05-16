@@ -33,14 +33,14 @@ function LoginModal(props: Props) {
         logo={import.meta.env.VITE_APP_LOGO}
         title=""
         subTitle="全网最便宜的人工智能对话"
-        actions={
+        actions={(
           <Space>
             <HeartFilled />
             <RedditCircleFilled />
             <SlackCircleFilled />
             <TwitterCircleFilled />
           </Space>
-        }
+        )}
         contentStyle={{
           width: 'auto',
           minWidth: '100px'

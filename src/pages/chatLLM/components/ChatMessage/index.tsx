@@ -1,56 +1,73 @@
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { Ref, useEffect, useMemo, useRef } from 'react'
 import { copyToClipboard, joinTrim } from '@/utils'
 import styles from './index.module.less'
 import OpenAiLogo from '@/components/OpenAiLogo'
-import { Space, Popconfirm, message } from 'antd'
+import { Space, Popconfirm, message, Button } from 'antd'
 
 import MarkdownIt from 'markdown-it'
 import mdKatex from '@traptitech/markdown-it-katex'
 import mila from 'markdown-it-link-attributes'
 import hljs from 'highlight.js'
-import { DeleteOutlined } from '@ant-design/icons'
+import { DeleteOutlined, FormOutlined, ReloadOutlined, LikeOutlined, DislikeOutlined, CopyOutlined } from '@ant-design/icons'
 
-function ChatMessage({
-  position,
-  content,
-  status,
-  time,
-  onDelChatMessage
-}: {
+function ChatMessage(props: {
   position: 'left' | 'right'
   content?: string
   status: 'pass' | 'loading' | 'error' | string
   time: string
   onDelChatMessage?: () => void
+  reInput: (desc: string) => void
+  reSend: () => void
 }) {
+  const { position,
+    content,
+    status,
+    time,
+    onDelChatMessage,
+    reInput,
+    reSend } = props
   const copyMessageKey = 'copyMessageKey'
   const markdownBodyRef = useRef<HTMLDivElement>(null)
+  const copyBtnRef = useRef<HTMLDivElement>(null)
 
-  function addCopyEvents() {
-    if (markdownBodyRef.current) {
-      const copyBtn = markdownBodyRef.current.querySelectorAll('.code-block-header__copy')
-      copyBtn.forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const code = btn.parentElement?.nextElementSibling?.textContent
-          if (code) {
-            copyToClipboard(code)
-              .then(() => {
-                message.open({
-                  key: copyMessageKey,
-                  type: 'success',
-                  content: '复制成功'
-                })
+  /**
+   * 
+   * @param content 复制内容
+   * @param copyBtnRef 复制触发元素
+   * 不传content及copyBtnRef时，表示默认的复制ChatMessage中的markdown内容
+   */
+  function addCopyEvents(content?: string, copyBtnRef?: any) {
+    const copyBtn = copyBtnRef?.current
+    const copyEvent = (btn: any) => {
+      btn.addEventListener('click', () => {
+        const code = content || btn.parentElement?.nextElementSibling?.textContent
+        if (code) {
+          copyToClipboard(code)
+            .then(() => {
+              message.open({
+                key: copyMessageKey,
+                type: 'success',
+                content: '复制成功'
               })
-              .catch(() => {
-                message.open({
-                  key: copyMessageKey,
-                  type: 'error',
-                  content: '复制失败'
-                })
+            })
+            .catch(() => {
+              message.open({
+                key: copyMessageKey,
+                type: 'error',
+                content: '复制失败'
               })
-          }
-        })
+            })
+        }
       })
+    }
+    if (copyBtn) {
+      copyEvent(copyBtn)
+      copyBtn.click()
+    } else {
+      if (markdownBodyRef.current) {
+        const copyBtn = markdownBodyRef.current.querySelectorAll('.code-block-header__copy')
+        copyBtn.forEach(copyEvent)
+      }
     }
   }
 
@@ -121,6 +138,14 @@ function ChatMessage({
     )
   }
 
+  const reInputClick = (desc: string) => {
+    reInput(desc)
+  }
+
+  const reSendClick = () => {
+    reSend()
+  }
+
   return (
     <div
       className={styles.chatMessage}
@@ -131,7 +156,7 @@ function ChatMessage({
       {position === 'left' &&
         chatAvatar({
           style: { marginRight: 8 },
-          icon: '/src/assets/user.png'
+          icon: '/src/assets/gpt.svg'
         })}
       <div className={styles.chatMessage_content}>
         <span
@@ -151,20 +176,42 @@ function ChatMessage({
           {status === 'loading' ? (
             <OpenAiLogo rotate />
           ) : (
-            <div
-              ref={markdownBodyRef}
-              className={'markdown-body'}
-              dangerouslySetInnerHTML={{
-                __html: text
-              }}
-            />
+            <div>
+              <div
+                ref={markdownBodyRef}
+                className={'markdown-body'}
+                dangerouslySetInnerHTML={{
+                  __html: text
+                }}
+              />
+              {
+                position === 'left' ? (
+                  <div className={styles.handle_area}>
+                    <div className={styles.handle_first_div}>
+                      <Button type="text" icon={<ReloadOutlined />} onClick={reSendClick}>重新回答</Button>
+                    </div>
+                    <div>
+                      <Button type="text" icon={<CopyOutlined />} onClick={() => addCopyEvents(content || '', copyBtnRef)} ref={copyBtnRef} />
+                      <span className={styles.handle_middle_space} />
+                      <Button type="text" icon={<LikeOutlined />} />
+                      <span className={styles.handle_middle_space} />
+                      <Button type="text" icon={<DislikeOutlined />} />
+                    </div>
+                  </div>
+                )
+                  : (
+                  <div className={styles.handle_area}>
+                    <Button type="text" icon={<FormOutlined />} onClick={() => reInputClick(content || '')}>重新输入</Button>
+                  </div>
+                )}
+            </div>
           )}
         </div>
       </div>
       {position === 'right' &&
         chatAvatar({
           style: { marginLeft: 8 },
-          icon: 'https://cdn.jsdelivr.net/gh/duogongneng/testuitc/1682426702646avatarf3db669b024fad66-1930929abe2847093.png'
+          icon: '/src/assets/user.png'
         })}
     </div>
   )

@@ -1,0 +1,124 @@
+.chatPage {
+
+    .menuItem {
+        color        : #fff;
+        padding      : 12px;
+        border-radius: 4px;
+        height       : 40px;
+        border       : 1px solid #e5e7eb;
+        display      : flex;
+        align-items  : center;
+        border-color : #e5e7eb;
+
+        &:hover {
+            background-color: #fff;
+            color           : #2d78ff;
+        }
+
+        transition: all 0.3s ease-in-out;
+
+        &_action {
+            background-color: #fff;
+            color           : #2d78ff;
+
+            .menuItem_options {
+                display: inline-block;
+            }
+        }
+
+        &_options {
+            margin-left: auto;
+            cursor     : pointer;
+            display    : none;
+        }
+
+        &_icon {
+            margin-right: 8px;
+        }
+
+        &_name {
+            font-size    : 14px;
+            overflow     : hidden; //超出的文本隐藏
+            text-overflow: ellipsis; //溢出用省略号显示
+            white-space  : nowrap; //溢出不换行
+        }
+    }
+
+    &_container {
+        display       : flex;
+        flex-direction: column;
+        height        : calc(100vh - 56px);
+
+        &_one {
+            flex         : 1;
+            width        : 100%;
+            align-self   : center;
+            overflow     : auto;
+            padding-right: calc((100% - 900px) / 2);
+            padding-left : calc((100% - 900px) / 2);
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+        }
+
+        &_two {
+            padding  : 12px 12px 20px;
+            // height: 80px;
+        }
+    }
+}
+
+.chatPage {
+    [class*='ant-pro-sider-collapsed-button'] {
+        inset-block-start: 40%;
+    }
+
+    [class*='ant-layout-sider-children'] {
+        padding-inline  : 12px !important;
+        background-image: linear-gradient(#5fa1fa, #a0baff, #84b3f5, #62cded, #8dd6fd);
+        border-radius   : 0 20px 20px 0;
+    }
+
+    [class*='ant-pro-sider-extra'] {
+        margin-inline: 0px;
+    }
+
+    [class*='ant-menu-item'] {
+        width           : 100%;
+        margin-top      : 8px;
+        margin-left     : 0;
+        margin-right    : 0;
+        padding         : 0 !important;
+        background-color: transparent !important;
+
+        &:hover {
+            background-color: transparent !important;
+        }
+    }
+
+    [class*='ant-menu-item-selected'] {
+        background-color: transparent !important;
+    }
+
+    [class*='ant-pro-layout-content'] {
+        padding-block: 0;
+    }
+
+    @media (max-width: 600px) {
+        [class*='ant-pro-layout-content'] {
+            padding-inline: 4px;
+        }
+    }
+
+    :global {
+        .ant-pro-layout .ant-pro-layout-bg-list {
+            background: #dee7f9;
+        }
+
+        .ant-pro-layout .ant-pro-sider-logo>a>h1 {
+            color    : #fff;
+            font-size: 20;
+        }
+    }
+}

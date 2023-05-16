@@ -1,0 +1,79 @@
+.chatMessage {
+    display   : flex;
+    margin-top: 12px;
+
+    &_avatar {
+        width        : 34px;
+        height       : 34px;
+        border-radius: 50%;
+    }
+
+    &_content {
+        display       : flex;
+        flex-direction: column;
+        width         : calc(100% - 42px);
+
+        &_time {
+            margin-top   : 4px;
+            margin-bottom: 4px;
+            font-size    : 12px;
+            color        : #999;
+        }
+
+        &_text {
+            max-width: calc(100% - 42px);
+            display  : inline-block;
+            padding  : 12px 12px 0;
+
+            .handle_area {
+                display        : flex;
+                justify-content: right;
+                padding-top    : 10px;
+                min-width      : 240px;
+                visibility     : hidden;
+
+                button {
+                    color        : rgb(94 117 159 / 70%);
+                    padding-right: 0;
+                    padding-left : 0;
+                }
+
+                .handle_middle_space {
+                    border-left: 1px solid rgb(94 117 159 / 70%);
+                    margin     : 4px 10px;
+                }
+
+                .handle_first_div {
+                    flex: 1;
+
+                }
+            }
+
+            &:hover {
+                .handle_area {
+                    visibility: visible;
+                }
+            }
+        }
+
+        .left {
+            margin-right              : auto;
+            background-color          : #f4f6f8;
+            border-top-left-radius    : 2px;
+            border-top-right-radius   : 12px;
+            border-bottom-left-radius : 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        .right {
+            margin-left               : auto;
+            background-color          : #cdeeff;
+            border-top-left-radius    : 12px;
+            border-top-right-radius   : 2px;
+            border-bottom-left-radius : 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+    }
+
+}

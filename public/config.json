@@ -1,0 +1,19 @@
+{
+    "projectInfo": {
+        "projectName": "chatgpt-web",
+        "name": "灵知",
+        "slogan": "知你所想",
+        "description": [
+            "作为您的AI伙伴",
+            "我可以为您答疑解惑，帮助您快捷获取信息和灵感"
+        ],
+        "guideQuesList": [
+            "AI伙伴可以做什么？",
+            "AI伙伴可以做什么？",
+            "AI伙伴可以做什么？",
+            "AI伙伴可以做什么？",
+            "AI伙伴可以做什么？",
+            "AI伙伴可以做什么？"
+        ]
+    }
+}
